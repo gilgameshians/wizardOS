@@ -1,7 +1,6 @@
 { config, pkgs, lib, ... }:
 
 {
-
   imports = [
     /etc/nixos/hardware-configuration.nix
   ];
@@ -10,7 +9,7 @@
   boot.loader = {
   systemd-boot.enable = true;
   efi.canTouchEfiVariables = true;
-  };
+};
 
   networking = {
     firewall = {
@@ -38,12 +37,11 @@
       LC_TIME = "en_IN";
       LC_CTYPE="en_US.utf8"; # required by dmenu don't change this
     };
-  };
 
   services = {
     xserver = {
-      layout = "us";
-      xkbVariant = "";
+      layout = "br";
+      xkbVariant = "nodeadkeys";
       enable = true;
       windowManager.i3 = {
         enable = true;
@@ -51,6 +49,7 @@
           i3status
         ];
       };
+
       desktopManager = {
         xterm.enable = false;
         xfce = {
@@ -59,19 +58,23 @@
           enableXfwm = false;
         };
       };
+
       displayManager = {
         lightdm.enable = true;
         defaultSession = "xfce+i3";
       };
     };
+
     gvfs.enable = true;
     blueman.enable = true;
+
     pipewire = {
       enable = true;
       alsa = {
         enable = true;
         support32Bit = true;
       };
+
       pulse.enable = true;
     };
   };
@@ -88,7 +91,6 @@
     description = "wizard";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
-      firefox
       xarchiver
     ];
   };
@@ -108,10 +110,23 @@
     vim
     unrar
     unzip
+
+   # Python
+   pkgs.python3
+
+   # Rust
+   pkg-config
+   pango
+   rustc
+   cargo
+   gcc
   ];
 
   programs.thunar.enable = true;
   programs.dconf.enable = true;
+  programs.yazi.enable = true; # terminal file explorer
+  programs.fish.enable = true; # interactive terminal shell
+  users.defaultUserShell = pkgs.fish; # fish as default shell
 
   security = {
     polkit.enable = true;
