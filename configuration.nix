@@ -37,11 +37,12 @@
       LC_TIME = "en_IN";
       LC_CTYPE="en_US.utf8"; # required by dmenu don't change this
     };
+   };
 
   services = {
     xserver = {
       layout = "br";
-      xkbVariant = "nodeadkeys";
+      xkbVariant = "";
       enable = true;
       windowManager.i3 = {
         enable = true;
@@ -91,6 +92,7 @@
     description = "wizard";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
+      firefox
       xarchiver
     ];
   };
@@ -122,8 +124,8 @@
    gcc
   ];
 
-  programs.thunar.enable = true;
   programs.dconf.enable = true;
+  programs.thunar.enable = true; # file explorer
   programs.yazi.enable = true; # terminal file explorer
   programs.fish.enable = true; # interactive terminal shell
   users.defaultUserShell = pkgs.fish; # fish as default shell
@@ -156,4 +158,5 @@
 
   # Don't touch this
   system.stateVersion = "23.05";
+
 }
